@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "fintech-integration-lab"
 version = "0.1.0"
-description = "Recruiter-ready FastAPI project demonstrating webhook verification + idempotency + tests."
+description = "FastAPI webhook receiver with HMAC signature verification, replay protection, idempotent storage, and tests."
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
