@@ -1,8 +1,19 @@
-# Fintech Integration Lab
+# Webhook Integration Lab
 
-![CI](https://github.com/bentley-michael/fintech-integration-lab/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/bentley-michael/integration-lab/actions/workflows/ci.yml/badge.svg)
 
-A production-minded reference implementation of a webhook ingestion service built with **FastAPI**. Designed to demonstrate robust security practices for financial integrations without relying on vendor SDKs. Prevents double-processing (e.g., duplicate charges) when providers retry webhooks.
+A reference implementation of a webhook ingestion service built with **FastAPI**. Designed to demonstrate robust security practices for financial integrations without relying on vendor SDKs. Prevents double-processing (e.g., duplicate charges) when providers retry webhooks.
+
+## At a glance
+
+| | |
+| --- | --- |
+| **Business problem** | Payment providers retry webhooks. Without protection, one event can be processed twice and a customer can be charged or fulfilled twice. |
+| **What connects to what** | A Stripe-style sender posts signed events to a FastAPI endpoint. Accepted events are stored in SQLite. |
+| **My contribution** | Sole author of the repository. It contains the signature check, the replay window, idempotent storage, a demo sender script, and the tests. |
+| **How it is tested** | 7 pytest tests: valid signature, invalid signature, missing signature, replayed event, stale timestamp, event listing, and health check. GitHub Actions runs them on Python 3.10 and 3.11. |
+| **Status** | Working demo. It uses simulated events, not a live Stripe account. |
+| **Limitations** | No async worker. No Postgres. Handles one provider format. Business logic after storage is a stub. |
 
 ## Quick Demo (60 Seconds)
 
@@ -108,7 +119,7 @@ HTTP/1.1 400 Bad Request
 ## Project Structure
 
 ```text
-fintech-integration-lab/
+integration-lab/
 ├── app/
 │   ├── webhooks/
 │   │   └── provider.py    # Core signature verification & handler logic
